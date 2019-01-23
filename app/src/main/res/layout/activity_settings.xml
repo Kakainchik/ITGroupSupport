@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity"
+    android:paddingTop="5dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp">
+
+    <EditText android:id="@+id/name_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:layout_alignParentTop="true"
+        android:hint="@string/title_name"/>
+
+    <EditText android:id="@+id/surname_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:inputType="textPersonName"
+        android:layout_below="@id/name_text"
+        android:hint="@string/title_surname"/>
+
+    <EditText android:id="@+id/phone_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:inputType="phone"
+        android:layout_below="@id/surname_text"
+        android:hint="@string/title_phone"/>
+
+    <Button android:id="@+id/accept_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/phone_text"
+        android:textStyle="bold"
+        android:textColor="#009b00"
+        android:text="@string/title_accept"/>
+
+    <Button android:id="@+id/logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"
+        android:textColor="#ff0000"
+        android:text="@string/title_logout"/>
+
+    <Button android:id="@+id/change_pass_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/logout_button"
+        android:textStyle="bold"
+        android:textColor="#0044ff"
+        android:text="@string/title_change_pass"
+        android:onClick="onChangePassButtonClick"/>
+
+</RelativeLayout>

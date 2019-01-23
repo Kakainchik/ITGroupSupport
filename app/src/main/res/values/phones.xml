@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="almaty"><b>Алматы:</b> +7 (7273) 64–53–77</string>
+    <string name="astana"><b>Астана:</b> +7 (7172) 64–29–05</string>
+    <string name="atyrau"><b>Атырау:</b> +7 (7122) 93–58–41</string>
+    <string name="aktobe"><b>Актобе:</b> +7 (7132) 72–30–52</string>
+    <string name="uralsk"><b>Уральск:</b> +7 (7112) 96–24–38</string>
+    <string name="aktau"><b>Актау:</b> +7 (7292) 78–13–56</string>
+    <string name="karaganda"><b>Караганда:</b> +7 (7212) 90–31–26</string>
+    <string name="shymkent"><b>Шымкент:</b> +7 (7252) 60–51–64</string>
+    <string name="ust_kamenogorsk"><b>Усть-Каменогорск:</b> +7 (7232) 91–62–37</string>
+    <string name="semipalatinsk"><b>Семипалатинск:</b> +7 (7222) 68–41–06</string>
+    <string name="petropavlovsk"><b>Петропавловск:</b> +7 (7152) 63–21–48</string>
+    <string name="pavlodar"><b>Павлодар:</b> +7 (7182) 49–80–47</string>
+    <string name="taraz"><b>Тараз:</b>+7 (7262) 92–41–05</string>
+    <string name="moscow"><b>Москва:</b> +7 (495) 133–62–53</string>
+</resources>

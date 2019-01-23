@@ -3,4 +3,7 @@
     <color name="colorPrimary">#005B85</color>
     <color name="colorPrimaryDark">#002E57</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- Titles -->
+    <color name="colorDarkText">#111111</color>
 </resources>

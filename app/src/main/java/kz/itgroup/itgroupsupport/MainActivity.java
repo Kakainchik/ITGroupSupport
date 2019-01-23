@@ -13,8 +13,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void toSettings(View view) {
+    public void onSettingsButtonClick(View view) {
         Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
+    }
+
+    public void onInfoButtonClick(View view) {
+        Intent i = new Intent(this, InfoActivity.class);
         startActivity(i);
     }
 }
