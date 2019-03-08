@@ -1,5 +1,6 @@
 package kz.itgroup.itgroupsupport;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,10 @@ public class TokenFragment extends Fragment {
         args.putInt("num", page);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static String getTitle(Context context, int position) {
+        return "Page " + String.valueOf(position + 1);
     }
 
     @Override

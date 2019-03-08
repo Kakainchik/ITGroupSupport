@@ -6,4 +6,11 @@
 
     <!-- Titles -->
     <color name="colorDarkText">#111111</color>
+
+    <!-- Main menu -->
+    <color name="colorPressedButton">#E6E6E6</color>
+
+    <!-- Floating Button -->
+    <color name="colorAddToken">#0077AF</color>
+
 </resources>

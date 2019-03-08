@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".TokenFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/displayText"
         android:layout_width="wrap_content"
