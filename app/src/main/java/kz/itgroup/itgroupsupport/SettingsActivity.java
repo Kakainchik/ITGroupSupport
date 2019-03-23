@@ -1,10 +1,10 @@
 package kz.itgroup.itgroupsupport;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -103,7 +103,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateUI(GoogleSignInAccount account) {
         if (account != null) {
-            nameTextView.setText(account.getDisplayName().equals(account.getEmail()) ? null : account.getDisplayName());
+            //nameTextView.setText(account.getDisplayName().equals(account.getEmail()) ? null : account.getDisplayName());
+            nameTextView.setText(account.getId());
             emailTextView.setText(account.getEmail());
             signInButton.setVisibility(View.GONE);
             signOutButton.setVisibility(View.VISIBLE);

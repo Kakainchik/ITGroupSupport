@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_token_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,15 +25,48 @@
             app:title="@string/title_token"
             app:titleTextColor="@android:color/white" />
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/token_list"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:scrollbars="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager">
 
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/image_token_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <ImageView
+            android:id="@+id/token_image_info"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/not_found_token_icon" />
+
+        <TextView
+            android:id="@+id/token_text_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/token_image_info"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="@dimen/mainButtonTextSize"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

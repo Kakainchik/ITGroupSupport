@@ -1,10 +1,10 @@
 package kz.itgroup.itgroupsupport;
 
-import java.text.DateFormat;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class TokenModel {
+public class TokenModel implements Serializable {
 
     //Properties
     private String title;

@@ -9,4 +9,8 @@
     <!-- Floating button -->
     <dimen name="addFloatingButtonIconStroke">3dp</dimen>
 
+    <!-- List item -->
+    <dimen name="listBorderLine">3dp</dimen>
+    <dimen name="deleteItemTextSize">18sp</dimen>
+
 </resources>

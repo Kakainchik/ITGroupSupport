@@ -21,7 +21,6 @@
     <!-- Contacts -->
     <string name="title_call_us">Звоните</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="title_email">example@gmail.com</string>
 
     <!-- Main activity -->
@@ -29,6 +28,19 @@
     <string name="title_contact">Контакты</string>
     <string name="title_settings">Настройки</string>
 
-    <string name="token_closed">Закрыт</string>
-    <string name="token_open">Открыт</string>
+    <!-- Token activity -->
+    <string name="title_token_closed">Отправлен</string>
+    <string name="title_token_open">В черновике</string>
+    <string name="title_token_delete">Удалить</string>
+    <string name="alert_token_deleted">Токен удалён</string>
+
+    <!-- Create token activity -->
+    <string name="title_theme">Тема</string>
+    <string name="title_description">Описание</string>
+    <string name="title_save_token">Сохранить</string>
+    <string name="title_send_token">Отправить</string>
+    <string name="error_field_empty">Заполните поля</string>
+    <string name="alert_cancel_token">Выйти без сохранения?</string>
+    <string name="alert_cancel">Отмена</string>
+    <string name="alert_continue">Не сохранять</string>
 </resources>

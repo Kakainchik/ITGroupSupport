@@ -43,4 +43,26 @@
         <item name="tabSelectedTextColor">@android:color/white</item>
     </style>
 
+    <style name="LabelHintTextStyle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorAddToken</item>
+    </style>
+
+    <style name="LabelEdiTextStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@android:color/background_light</item>
+        <item name="colorControlActivated">@color/colorAddToken</item>
+    </style>
+
+    <style name="CreateTokenButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/colorAddToken</item>
+    </style>
+
+    <style name="CancelTokenButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@android:color/white</item>
+        <item name="android:textColor">@color/colorAddToken</item>
+    </style>
+
+    <style name="AlertDialogPrimaryStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAddToken</item>
+    </style>
+
 </resources>

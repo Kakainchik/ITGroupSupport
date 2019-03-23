@@ -1,39 +1,105 @@
 package kz.itgroup.itgroupsupport;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.GmailScopes;
-import com.google.api.services.gmail.model.Label;
-import com.google.api.services.gmail.model.ListLabelsResponse;
+public class CreateTokenActivity extends AppCompatActivity implements View.OnClickListener {
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.List;
-
-public class CreateTokenActivity extends AppCompatActivity {
-
-    private final static String APPLICATION_NAME = "ITGroup Support";
-    private final static String TOKENS_DIRECTORY_PATH = "tokens";
-    private final static JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-
-    private final static List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_LABELS);
-    private final static String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private EditText themeText, descriptionText;
+    private Button saveToken, sendToken;
+    private TokenModel currentToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_token);
+
+        themeText = (EditText) findViewById(R.id.token_theme_text);
+        descriptionText = (EditText) findViewById(R.id.token_description_text);
+        saveToken = (Button) findViewById(R.id.save_token_button);
+        sendToken = (Button) findViewById(R.id.send_token_button);
+
+        themeText.requestFocus();
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogPrimaryStyle)
+                .setMessage(R.string.alert_cancel_token)
+                .setPositiveButton(R.string.alert_continue, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setResult(RESULT_CANCELED);
+                        finish();
+                    }
+                })
+                .setNeutralButton(R.string.alert_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        if (isValidToSave())
+            builder.setNegativeButton(R.string.title_save_token, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SaveToken();
+                }
+            });
+
+        builder.create().show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.send_token_button: {
+                SendToken();
+                break;
+            }
+            case R.id.save_token_button: {
+                SaveToken();
+                break;
+            }
+        }
+    }
+
+    private void SendToken() {
+        if (!isValidToSave()) {
+            Toast.makeText(this, R.string.error_field_empty, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
+    private void SaveToken() {
+        if (!isValidToSave()) {
+            Toast.makeText(this, R.string.error_field_empty, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String theme = themeText.getText().toString();
+        String description = descriptionText.getText().toString();
+        currentToken = new TokenModel(theme, description);
+
+        Intent data = new Intent();
+        data.putExtra(TokenActivity.TOKEN_KEY, currentToken);
+        setResult(RESULT_OK, data);
+
+        super.finish();
+    }
+
+    private boolean isValidToSave() {
+        if (themeText.length() == 0 | descriptionText.length() == 0) return false;
+        else return true;
     }
 }
