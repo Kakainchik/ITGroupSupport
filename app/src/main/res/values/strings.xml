@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ITGroup Support</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+    <string name="default_notification_channel_id">Common</string>
 
     <!-- Settings activity -->
     <string name="title_name">Имя…</string>
@@ -29,10 +31,14 @@
     <string name="title_settings">Настройки</string>
 
     <!-- Token activity -->
+    <string name="title_token_handled">Запрос обработан</string>
     <string name="title_token_closed">Отправлен</string>
     <string name="title_token_open">В черновике</string>
     <string name="title_token_delete">Удалить</string>
     <string name="alert_token_deleted">Токен удалён</string>
+    <string name="title_token_saved">Токен сохранён</string>
+    <string name="title_token_sent">Токен отправлен</string>
+    <string name="error_cannot_load_tokens">Не удалось загрузить токены</string>
 
     <!-- Create token activity -->
     <string name="title_theme">Тема</string>
@@ -43,4 +49,11 @@
     <string name="alert_cancel_token">Выйти без сохранения?</string>
     <string name="alert_cancel">Отмена</string>
     <string name="alert_continue">Не сохранять</string>
+    <string name="error_cannot_create_token">Не удаётся создать токен</string>
+    <string name="error_cannot_send_token">Не удаётся отправить токен</string>
+    <string name="error_auth_request">Вам нужно авторизоваться, чтобы отправлять токены</string>
+    <string name="error_internet_connection">Не удалось подключиться, проверьте интернет соединение</string>
+    <string name="error_internal_server">Внутренняя ошибка сервера, попробуйте позже</string>
+    <string name="error_connection_timeout">Время ожидания ответа от сервера истекло, попробуйте позже</string>
+    <string name="error_unknown">Неизвестная ошибка, попробуйте ещё раз</string>
 </resources>

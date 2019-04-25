@@ -13,4 +13,9 @@
     <!-- Floating Button -->
     <color name="colorAddToken">#0077AF</color>
 
+    <!-- Token -->
+    <color name="colorHandledTokenText">#0A820A</color>
+    <color name="colorSentTokenText">#0F6DC4</color>
+    <color name="colorInNoteTokenText">#3F3C3C</color>
+
 </resources>

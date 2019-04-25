@@ -9,17 +9,17 @@ public class TokenModel implements Serializable {
     //Properties
     private String title;
     private String description;
-    private Calendar createDate;
-    private boolean isValid;
+    private TokenState state;
+    private long createdAt;
 
     //Constructor
     public TokenModel(String title, String description) {
         this.title = title;
         this.description = description;
-        this.createDate = Calendar.getInstance();
-        this.createDate.setTimeZone(TimeZone.getDefault());
-        this.createDate.set(Calendar.HOUR_OF_DAY, 0);
-        this.isValid = true;
+        Calendar createDate = Calendar.getInstance();
+        createDate.setTimeZone(TimeZone.getDefault());
+        this.createdAt = createDate.getTimeInMillis();
+        this.state = TokenState.IN_NOTEBOOK;
     }
 
     //Getters and Setters
@@ -39,15 +39,15 @@ public class TokenModel implements Serializable {
         this.description = description;
     }
 
-    public Calendar getCreateDate() {
-        return createDate;
+    public long getCreateDate() {
+        return createdAt;
     }
 
-    public boolean isValid() {
-        return isValid;
+    public TokenState getState() {
+        return state;
     }
 
-    public void setValid(boolean valid) {
-        isValid = valid;
+    public void setState(TokenState state) {
+        this.state = state;
     }
 }

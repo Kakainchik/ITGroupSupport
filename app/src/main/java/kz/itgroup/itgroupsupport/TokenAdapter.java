@@ -1,8 +1,8 @@
 package kz.itgroup.itgroupsupport;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +13,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class TokenAdapter extends RecyclerView.Adapter<TokenAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
     private int layout;
-    private List<TokenModel> tokens;
+    private List<TokenFile> tokens;
 
-    public TokenAdapter(Context context, int resource, List<TokenModel> tokens) {
+    public TokenAdapter(Context context, int resource, List<TokenFile> tokens) {
 
         this.inflater = LayoutInflater.from(context);
         this.layout = resource;
@@ -39,25 +40,41 @@ public class TokenAdapter extends RecyclerView.Adapter<TokenAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull TokenAdapter.ViewHolder viewHolder, int i) {
 
-        //Получаем токен по id
-        TokenModel token = tokens.get(i);
-        //Устанавливаем заголовок
+        //Getting token by id
+        TokenModel token = tokens.get(i).getToken();
+        //Setting title
         viewHolder.title_text.setText(token.getTitle());
-        //Устанавливаем текст сообщения
+        //Setting body text
         viewHolder.description_text.setText(token.getDescription());
 
-        //Если токен отправлен
-        if (token.isValid()) {
-            viewHolder.valid_text.setText(R.string.title_token_open);
-            viewHolder.valid_text.setTextColor(Color.rgb(200, 10, 10));
-        } else {
-            viewHolder.valid_text.setText(R.string.title_token_closed);
-            viewHolder.valid_text.setTextColor(Color.rgb(10, 130, 10));
+        //Set state text
+        switch(token.getState()){
+            case SENT: {
+                viewHolder.valid_text.setText(R.string.title_token_closed);
+                viewHolder.valid_text.setTextColor(ContextCompat.getColor(
+                        inflater.getContext(),
+                        R.color.colorSentTokenText));
+                break;
+            }
+            case HANDLED: {
+                viewHolder.valid_text.setText(R.string.title_token_handled);
+                viewHolder.valid_text.setTextColor(ContextCompat.getColor(
+                        inflater.getContext(),
+                        R.color.colorHandledTokenText));
+                break;
+            }
+            case IN_NOTEBOOK: {
+                viewHolder.valid_text.setText(R.string.title_token_open);
+                viewHolder.valid_text.setTextColor(ContextCompat.getColor(
+                        inflater.getContext(),
+                        R.color.colorInNoteTokenText));
+                break;
+            }
         }
 
         //Получаем дату создания токена
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        viewHolder.date_text.setText(sdf.format(token.getCreateDate().getTime()));
+        viewHolder.date_text.setText(sdf.format(new Date(token.getCreateDate())));
     }
 
     @Override

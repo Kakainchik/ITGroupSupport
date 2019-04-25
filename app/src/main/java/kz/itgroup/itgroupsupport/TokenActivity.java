@@ -14,29 +14,38 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TokenActivity extends AppCompatActivity implements RecyclerItemTouchHelperListener {
 
-    private List<TokenModel> tokens = new ArrayList<>();
     public static final String TOKEN_KEY = "TOKEN_KEY";
+    public static final String TOKEN_FILE_KEY = "TOKEN_FILE_KEY";
+
+    //Response codes
+    private static final int REQUEST_CREATE_CODE = 1;
+    private static final int REQUEST_CHANGE_CODE = 2;
+
+    private List<TokenFile> tokens = new ArrayList<>();
     private FloatingActionButton tokenFAB;
-    private static final int REQUEST_ACCESS_CODE = 1;
     private RecyclerView tokenList;
     private TokenAdapter adapter;
     private RelativeLayout rootLayout;
 
     private void setInitialData() {
-        tokens.add(new TokenModel("Mars One", "is bankrot"));
-        tokens.add(new TokenModel("Me", "Too"));
-        tokens.add(new TokenModel("Mars One", "is lucky"));
-        tokens.add(new TokenModel("Me", "Too"));
-        tokens.add(new TokenModel("Mars One", "is on Mars"));
+        String[] paths = IOFileHelper.getPathTokenFiles(this);
+
+        try {
+            for(String str: paths) {
+                TokenFile file = IOFileHelper.loadTokenFile(this, str);
+                tokens.add(file);
+            }
+        } catch(IOException ex) {
+            Toast.makeText(this, R.string.error_cannot_load_tokens, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -44,14 +53,14 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_token);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.token_toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.token_toolbar);
         setSupportActionBar(toolbar);
 
         setInitialData();
 
-        tokenList = (RecyclerView) findViewById(R.id.token_list);
-        tokenFAB = (FloatingActionButton) findViewById(R.id.fab);
-        rootLayout = (RelativeLayout) findViewById(R.id.view_token_layout);
+        tokenList = (RecyclerView)findViewById(R.id.token_list);
+        tokenFAB = (FloatingActionButton)findViewById(R.id.fab);
+        rootLayout = (RelativeLayout)findViewById(R.id.view_token_layout);
 
         //Устанавливаем адаптер токенов
         adapter = new TokenAdapter(this, R.layout.token_list_item, tokens);
@@ -69,24 +78,42 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
                 = new RecycleItemTouchHelper(0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(tokenList);
 
+        //Создаём новый токен
         tokenFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(), CreateTokenActivity.class);
-                ;
-                startActivityForResult(intent, REQUEST_ACCESS_CODE);
+                startActivityForResult(intent, REQUEST_CREATE_CODE);
             }
         });
+
+        //Переход на страницу изменения токена при нажатии
+        tokenList.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                tokenList,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(getApplicationContext(), CreateTokenActivity.class);
+                        intent.putExtra(TOKEN_KEY, tokens.get(position).getToken());
+                        intent.putExtra("position", position);
+                        startActivityForResult(intent, REQUEST_CHANGE_CODE);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+                }));
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (tokens.isEmpty()) {
             ((TextView) findViewById(R.id.token_text_info)).setText("У вас нет никаких токенов");
+            updateInfoUI(false);
         } else {
             updateInfoUI(true);
         }
@@ -97,7 +124,7 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
         if (holder instanceof TokenAdapter.ViewHolder) {
 
             final int index = holder.getAdapterPosition();
-            final TokenModel deletedToken = tokens.get(index);
+            final TokenFile deletedToken = tokens.get(index);
             adapter.removeItem(index);
 
             Snackbar snackbar = Snackbar.make(rootLayout, R.string.alert_token_deleted, Snackbar.LENGTH_LONG);
@@ -110,22 +137,76 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
             });
             snackbar.setActionTextColor(getResources().getColor(R.color.colorAddToken));
             snackbar.show();
+            IOFileHelper.deleteTokenFile(this, deletedToken.getFullFileName());
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        final TokenModel token;
+        final TokenFile token;
 
-        if (requestCode == REQUEST_ACCESS_CODE) {
-            if (resultCode == RESULT_OK) {
-                token = (TokenModel) data.getSerializableExtra(TOKEN_KEY);
-                tokens.add(0, token);
-                adapter.notifyItemInserted(0);
-                tokenList.scrollToPosition(0);
+        switch(requestCode) {
+            case REQUEST_CREATE_CODE: {
+
+                switch (resultCode) {
+                    case CreateTokenActivity.RESULT_SAVED: {
+                        token = (TokenFile)data.getSerializableExtra(TOKEN_FILE_KEY);
+                        tokens.add(0, token);
+                        adapter.notifyItemInserted(0);
+                        tokenList.scrollToPosition(0);
+                        Toast.makeText(this, R.string.title_token_saved, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case CreateTokenActivity.RESULT_SENT: {
+                        token = (TokenFile)data.getSerializableExtra(TOKEN_FILE_KEY);
+                        tokens.add(0, token);
+                        adapter.notifyItemInserted(0);
+                        tokenList.scrollToPosition(0);
+                        Toast.makeText(this, R.string.title_token_sent, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case CreateTokenActivity.RESULT_ERROR: {
+                        Toast.makeText(this, R.string.error_cannot_create_token, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    default: {
+                        super.onActivityResult(requestCode, resultCode, data);
+                        break;
+                    }
+                }
+                break;
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            case REQUEST_CHANGE_CODE: {
+
+                switch (resultCode) {
+                    case CreateTokenActivity.RESULT_SAVED: {
+                        int position = data.getIntExtra("position", 0);
+                        token = (TokenFile)data.getSerializableExtra(TOKEN_FILE_KEY);
+                        tokens.set(position, token);
+                        adapter.notifyItemChanged(position);
+                        tokenList.scrollToPosition(0);
+                        Toast.makeText(this, R.string.title_token_saved, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case CreateTokenActivity.RESULT_SENT: {
+                        int position = data.getIntExtra("position", 0);
+                        token = (TokenFile)data.getSerializableExtra(TOKEN_FILE_KEY);
+                        tokens.set(position, token);
+                        adapter.notifyItemInserted(0);
+                        tokenList.scrollToPosition(0);
+                        Toast.makeText(this, R.string.title_token_sent, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case CreateTokenActivity.RESULT_ERROR: {
+                        Toast.makeText(this, R.string.error_cannot_create_token, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+            }
+            default: {
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+            }
         }
     }
 

@@ -78,6 +78,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
+
+            startService(new Intent(getApplicationContext(), NotificationMessagingService.class));
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -97,13 +99,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         updateUI(null);
+                        stopService(new Intent(getApplicationContext(), NotificationMessagingService.class));
                     }
                 });
     }
 
     private void updateUI(GoogleSignInAccount account) {
         if (account != null) {
-            //nameTextView.setText(account.getDisplayName().equals(account.getEmail()) ? null : account.getDisplayName());
             nameTextView.setText(account.getId());
             emailTextView.setText(account.getEmail());
             signInButton.setVisibility(View.GONE);
