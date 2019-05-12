@@ -25,7 +25,7 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
     public static final String TOKEN_KEY = "TOKEN_KEY";
     public static final String TOKEN_FILE_KEY = "TOKEN_FILE_KEY";
 
-    //Response codes
+    //Request codes
     private static final int REQUEST_CREATE_CODE = 1;
     private static final int REQUEST_CHANGE_CODE = 2;
 
@@ -35,6 +35,7 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
     private TokenAdapter adapter;
     private RelativeLayout rootLayout;
 
+    //Update the list if already it has any tokens
     private void setInitialData() {
         String[] paths = IOFileHelper.getPathTokenFiles(this);
 
@@ -62,8 +63,8 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
         tokenFAB = (FloatingActionButton)findViewById(R.id.fab);
         rootLayout = (RelativeLayout)findViewById(R.id.view_token_layout);
 
-        //Устанавливаем адаптер токенов
-        adapter = new TokenAdapter(this, R.layout.token_list_item, tokens);
+        //Initialize the token adapter
+        adapter = new TokenAdapter(this, tokens);
 
         tokenList.setHasFixedSize(true);
         final RecyclerView.ItemAnimator animator = new DefaultItemAnimator();
@@ -78,7 +79,7 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
                 = new RecycleItemTouchHelper(0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(tokenList);
 
-        //Создаём новый токен
+        //Create a new token
         tokenFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +89,7 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
             }
         });
 
-        //Переход на страницу изменения токена при нажатии
+        //Go to the token change page after click
         tokenList.addOnItemTouchListener(new RecyclerItemClickListener(this,
                 tokenList,
                 new RecyclerItemClickListener.OnItemClickListener() {
@@ -119,6 +120,7 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
         }
     }
 
+    //Swiped the token to delete
     @Override
     public void onSwiped(RecyclerView.ViewHolder holder, int direction, int position) {
         if (holder instanceof TokenAdapter.ViewHolder) {
@@ -146,10 +148,10 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
         final TokenFile token;
 
         switch(requestCode) {
-            case REQUEST_CREATE_CODE: {
+            case REQUEST_CREATE_CODE: { //If we create a token
 
                 switch (resultCode) {
-                    case CreateTokenActivity.RESULT_SAVED: {
+                    case CreateTokenActivity.RESULT_SAVED: { //If we saved one
                         token = (TokenFile)data.getSerializableExtra(TOKEN_FILE_KEY);
                         tokens.add(0, token);
                         adapter.notifyItemInserted(0);
@@ -157,7 +159,7 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
                         Toast.makeText(this, R.string.title_token_saved, Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    case CreateTokenActivity.RESULT_SENT: {
+                    case CreateTokenActivity.RESULT_SENT: { //If we sent one
                         token = (TokenFile)data.getSerializableExtra(TOKEN_FILE_KEY);
                         tokens.add(0, token);
                         adapter.notifyItemInserted(0);
@@ -165,21 +167,21 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
                         Toast.makeText(this, R.string.title_token_sent, Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    case CreateTokenActivity.RESULT_ERROR: {
+                    case CreateTokenActivity.RESULT_ERROR: { //Threw exception
                         Toast.makeText(this, R.string.error_cannot_create_token, Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    default: {
+                    default: { //If we cancel creating
                         super.onActivityResult(requestCode, resultCode, data);
                         break;
                     }
                 }
                 break;
             }
-            case REQUEST_CHANGE_CODE: {
+            case REQUEST_CHANGE_CODE: { //If we change a token
 
                 switch (resultCode) {
-                    case CreateTokenActivity.RESULT_SAVED: {
+                    case CreateTokenActivity.RESULT_SAVED: { //If we saved one
                         int position = data.getIntExtra("position", 0);
                         token = (TokenFile)data.getSerializableExtra(TOKEN_FILE_KEY);
                         tokens.set(position, token);
@@ -188,7 +190,7 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
                         Toast.makeText(this, R.string.title_token_saved, Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    case CreateTokenActivity.RESULT_SENT: {
+                    case CreateTokenActivity.RESULT_SENT: { //If we sent one
                         int position = data.getIntExtra("position", 0);
                         token = (TokenFile)data.getSerializableExtra(TOKEN_FILE_KEY);
                         tokens.set(position, token);
@@ -197,19 +199,20 @@ public class TokenActivity extends AppCompatActivity implements RecyclerItemTouc
                         Toast.makeText(this, R.string.title_token_sent, Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    case CreateTokenActivity.RESULT_ERROR: {
+                    case CreateTokenActivity.RESULT_ERROR: { //Threw exception
                         Toast.makeText(this, R.string.error_cannot_create_token, Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
             }
-            default: {
+            default: { //If we cancel changing
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
             }
         }
     }
 
+    //If it has not any tokens then hide interface
     private void updateInfoUI(boolean hide) {
         if (hide) {
             ((RelativeLayout) findViewById(R.id.image_token_layout)).setVisibility(View.GONE);

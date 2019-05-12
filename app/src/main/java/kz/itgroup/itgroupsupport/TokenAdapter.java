@@ -19,13 +19,11 @@ import java.util.List;
 public class TokenAdapter extends RecyclerView.Adapter<TokenAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
-    private int layout;
     private List<TokenFile> tokens;
 
-    public TokenAdapter(Context context, int resource, List<TokenFile> tokens) {
+    public TokenAdapter(Context context, List<TokenFile> tokens) {
 
         this.inflater = LayoutInflater.from(context);
-        this.layout = resource;
         this.tokens = tokens;
     }
 

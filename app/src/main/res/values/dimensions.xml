@@ -13,4 +13,10 @@
     <dimen name="listBorderLine">3dp</dimen>
     <dimen name="deleteItemTextSize">18sp</dimen>
 
+    <!-- Chip item -->
+    <dimen name="chipCornerRadius">14dp</dimen>
+
+    <!-- Create token activity -->
+    <dimen name="createTokenButtonTextSize">18sp</dimen>
+
 </resources>

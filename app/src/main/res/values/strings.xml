@@ -8,10 +8,11 @@
     <string name="title_name">Имя…</string>
     <string name="title_surname">Фамилия…</string>
     <string name="title_change_pass">Изменить пароль</string>
-    <string name="title_logout">Выйти из аккаунта</string>
+    <string name="title_logout">Log out</string>
     <string name="title_phone">+7 (###) ###-##-##</string>
     <string name="title_accept">Принять</string>
     <string name="title_cancel">Отмена</string>
+    <string name="title_email">example@gmail.com</string>
 
     <!-- Password -->
     <string name="title_old_pass">Старый пароль…</string>
@@ -22,8 +23,6 @@
 
     <!-- Contacts -->
     <string name="title_call_us">Звоните</string>
-
-    <string name="title_email">example@gmail.com</string>
 
     <!-- Main activity -->
     <string name="title_token">Токены</string>
@@ -45,6 +44,7 @@
     <string name="title_description">Описание</string>
     <string name="title_save_token">Сохранить</string>
     <string name="title_send_token">Отправить</string>
+    <string name="title_upload_file">Загрузить файл</string>
     <string name="error_field_empty">Заполните поля</string>
     <string name="alert_cancel_token">Выйти без сохранения?</string>
     <string name="alert_cancel">Отмена</string>

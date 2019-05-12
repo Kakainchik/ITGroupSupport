@@ -2,6 +2,8 @@ package kz.itgroup.itgroupsupport;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class TokenModel implements Serializable {
@@ -11,6 +13,7 @@ public class TokenModel implements Serializable {
     private String description;
     private TokenState state;
     private long createdAt;
+    private Map<String, String> filesData = new HashMap<>();
 
     //Constructor
     public TokenModel(String title, String description) {
@@ -49,5 +52,21 @@ public class TokenModel implements Serializable {
 
     public void setState(TokenState state) {
         this.state = state;
+    }
+
+    public int countFile() {
+        return filesData.size();
+    }
+
+    public void addFile(String name, String base64) {
+        filesData.put(name, base64);
+    }
+
+    public boolean removeFile(String key) {
+        return filesData.remove(key) != null;
+    }
+
+    public Map<String, String> getFiles() {
+        return filesData;
     }
 }

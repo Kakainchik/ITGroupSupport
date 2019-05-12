@@ -1,7 +1,10 @@
 package kz.itgroup.itgroupsupport;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Base64;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -116,5 +119,20 @@ public class IOFileHelper {
         }
 
         return false;
+    }
+
+    public static String encodeWithBase64(Context context, Uri data) {
+
+        ContentResolver resolver = context.getContentResolver();
+        byte bytes[] = null;
+
+        try(FileInputStream fis = (FileInputStream)resolver.openInputStream(data)) {
+            bytes = new byte[fis.available()];
+            fis.read(bytes);
+        } catch(IOException ioex) {
+            ioex.printStackTrace();
+        }
+
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".CreateTokenActivity">
 
     <FrameLayout
@@ -16,9 +17,10 @@
             android:layout_height="250dp"
             android:background="@color/colorAddToken" />
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="60dp"
             android:layout_marginRight="50dp"
@@ -56,11 +58,12 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:background="@android:color/black" />
+                        android:background="@android:color/black"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:minHeight="250dp"
                         android:layout_weight="1"
                         app:hintTextAppearance="@style/LabelHintTextStyle">
 
@@ -71,7 +74,7 @@
                             android:gravity="start"
                             android:hint="@string/title_description"
                             android:inputType="textMultiLine"
-                            android:theme="@style/LabelEdiTextStyle" />
+                            android:theme="@style/LabelEdiTextStyle"/>
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -79,46 +82,54 @@
 
             </android.support.design.card.MaterialCardView>
 
-        </FrameLayout>
+            <android.support.v7.widget.RecyclerView android:id="@+id/chip_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="10dp"
+                android:clipToPadding="false"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-            <android.support.v4.widget.Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
+                <Button android:id="@+id/fad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    style="@style/CancelTokenButtonStyle"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_file_upload_black_24dp"
+                    android:onClick="onClick"
+                    android:text="@string/title_upload_file"
+                    android:textSize="@dimen/createTokenButtonTextSize"/>
 
-            <Button
-                android:id="@+id/save_token_button"
-                style="@style/CancelTokenButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:text="@string/title_save_token"
-                android:textSize="18sp" />
+                <Button
+                    android:id="@+id/save_token_button"
+                    style="@style/CancelTokenButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:onClick="onClick"
+                    android:text="@string/title_save_token"
+                    android:textSize="@dimen/createTokenButtonTextSize"/>
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/send_token_button"
                 style="@style/CreateTokenButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_send_button"
                 android:onClick="onClick"
                 android:text="@string/title_send_token"
-                android:textSize="18sp" />
+                android:textSize="@dimen/createTokenButtonTextSize"
+                android:textAlignment="textStart"/>
 
         </LinearLayout>
-
 
     </FrameLayout>
 

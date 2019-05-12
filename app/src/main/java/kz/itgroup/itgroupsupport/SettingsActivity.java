@@ -106,8 +106,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateUI(GoogleSignInAccount account) {
         if (account != null) {
-            nameTextView.setText(account.getId());
+            nameTextView.setText(account.getGivenName());
             emailTextView.setText(account.getEmail());
+            accountImage.setImageURI(account.getPhotoUrl());
             signInButton.setVisibility(View.GONE);
             signOutButton.setVisibility(View.VISIBLE);
         } else {

@@ -18,4 +18,8 @@
     <color name="colorSentTokenText">#0F6DC4</color>
     <color name="colorInNoteTokenText">#3F3C3C</color>
 
+    <!-- Chip item -->
+    <color name="colorFileChipBackground">#EBEBEB</color>
+    <color name="colorFileChipCorner">#BFBFBF</color>
+
 </resources>
