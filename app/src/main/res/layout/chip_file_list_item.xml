@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/file_chip_rounded"
+    android:gravity="center_vertical"
+    android:padding="5dp">
+
+    <ImageView android:id="@+id/chip_file_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="5dp"/>
+
+    <TextView android:id="@+id/chip_file_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:autoSizeTextType="uniform"/>
+
+    <ImageButton android:id="@+id/chip_file_cancel"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/ic_cancel_black_24dp"
+        android:background="@android:color/transparent"/>
+
+</LinearLayout>

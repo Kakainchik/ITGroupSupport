@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 
 public abstract class HttpAsyncTask<Param, During, Response> extends AsyncTask<Param, During, NetResponse<Response>> {
 
-    protected final String URI = "http://192.168.100.2:8080/support/";
+    protected final String URI = "http://212.13.176.243:8081/support/";
     protected Context context;
     protected String response;
     public AsyncResponse<NetResponse<Response>> delegate = null;

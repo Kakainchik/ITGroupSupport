@@ -35,4 +35,10 @@ public class IOFileHelperTest {
 
         Context appContext = InstrumentationRegistry.getTargetContext();
     }
+
+    @Test
+    public void encodeToBase64_withoutRows() {
+
+        Context appContext = InstrumentationRegistry.getTargetContext();
+    }
 }
